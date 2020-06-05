@@ -13,8 +13,8 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 app.use("/", router)
 
-app.listen(config.SERVER_PORT, () => {
-  console.log("Server started and listening on port:", config.SERVER_PORT)
+app.listen(80, () => {
+  console.log("Server started and listening on port:", 80)
 })
 
 // // Connect MQTT

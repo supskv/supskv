@@ -22,8 +22,8 @@ app.use(_bodyParser["default"].urlencoded({
 }));
 app.use(_bodyParser["default"].json());
 app.use("/", _router["default"]);
-app.listen(_app["default"].SERVER_PORT, function () {
-  console.log("Server started and listening on port:", _app["default"].SERVER_PORT);
+app.listen(80, function () {
+  console.log("Server started and listening on port:", 80);
 }); // // Connect MQTT
 // const client = mqtt.connect({
 //   host: config.MQTT_SERVER,
