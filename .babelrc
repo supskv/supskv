@@ -12,6 +12,12 @@
           "@router": "./src/router"
         }
       }
+    ],
+    [
+      "@babel/plugin-transform-runtime",
+      {
+        "regenerator": true
+      }
     ]
   ]
 }
