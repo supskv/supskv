@@ -28,8 +28,10 @@ const client = mqtt.connect({
 client.on("connect", () => {
   // Subscribe any topic
   console.log("MQTT Client connected")
-  client.subscribe("test", (err) => {
-    if (err) console.log(err)
+  config.SERVER_MQTT_SUBSCRIBE.map((topic) => {
+    client.subscribe(topic, (err) => {
+      if (err) console.log(err)
+    })
   })
 })
 

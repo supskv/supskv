@@ -7,4 +7,5 @@ export default {
   MQTT_PASSWORD: process.env.MQTT_PASSWORD || "",
   MQTT_PORT: process.env.MQTT_PORT || 1883,
   SERVER_PORT: process.env.SERVER_PORT || 4000,
+  SERVER_MQTT_SUBSCRIBE: ["home/doorbell"],
 }
