@@ -29,15 +29,14 @@ client.on("connect", () => {
   // Subscribe any topic
   console.log("MQTT Client connected")
   client.subscribe("test", (err) => {
-    if (err) {
-      console.log(err)
-    }
+    if (err) console.log(err)
   })
-  // LineService.pushNoti("U9e5c1fc807fff3db84401a018942b6f1", "Hello, test")
 })
 
 // Receive Message and print on terminal
 client.on("message", (topic, message) => {
   // message is Buffer
   console.log(topic.toString(), message.toString())
+
+  LineService.pushToAll()
 })

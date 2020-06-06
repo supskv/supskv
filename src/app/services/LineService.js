@@ -1,14 +1,50 @@
-import config from "@config/api"
 import axios from "axios"
+import config from "@config/api"
+import { Line as model } from "@app/models"
 
-export const replyMsg = (event) => {
-  let reply_token = event.replyToken
-  let userId = event.source.userId
-  console.log(reply_token, userId)
+const verifyToken = "00000000000000000000000000000000"
+const doorbellMsg = "Someone is ringing the doorbell."
+
+export const replyMsg = async (events) => {
+  try {
+    const [
+      {
+        replyToken,
+        type,
+        mode,
+        source: { userId },
+      },
+    ] = events
+
+    switch (type) {
+      case "follow":
+        await model.save(userId)
+        break
+      case "unfollow":
+        await model.del(userId)
+        break
+      case "message":
+        break
+    }
+
+    console.log(replyToken, type, mode, userId)
+    console.log(await model.firstOrNew())
+  } catch (e) {
+    console.log(e.response)
+  }
 }
 
-export const pushNoti = async (userId, msg) => {
-  const data = JSON.stringify({
+export const pushToAll = async () => {
+  try {
+    const userIds = await model.firstOrNew()
+    userIds.map((userId) => sendPush(userId, doorbellMsg))
+  } catch (e) {
+    console.log(e.response)
+  }
+}
+
+const sendPush = (userId, msg) => {
+  const data = {
     to: userId,
     messages: [
       {
@@ -16,10 +52,10 @@ export const pushNoti = async (userId, msg) => {
         text: msg,
       },
     ],
-  })
+  }
 
   try {
-    await axios.post(config.LINE_PUSH_ENDPOINT, data, { headers: config.LINE_HEADER })
+    axios.post(config.LINE_PUSH_ENDPOINT, data, { headers: config.LINE_HEADER })
   } catch (e) {
     console.log(e.response)
   }
